@@ -1,0 +1,11 @@
+"codeinterpreterapi[all]"
+langchain
+codeboxapi>=0.0.19
+openai
+python-dotenv
+pydantic==1.9.2
+pydantic-settings>=1.9,<2.0
+streamlit>=1.0,<2.0
+jupyter-kernel-gateway>=2.0,<3.0
+Pillow>=9.0,<10.0
+

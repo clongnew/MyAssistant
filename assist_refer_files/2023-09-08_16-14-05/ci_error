@@ -1,0 +1,15 @@
+CalledProcessError(1, ['/usr/local/lib/python3/ci/bin/python', '/Users/mac/workspace/gpt_work/langchain_work/query_txt_prompt/assist_refer_files/2023-09-08_16-14-05/temp_script.py'])
+Traceback (most recent call last):
+  File "/Users/mac/workspace/gpt_work/langchain_work/query_txt_prompt/assist_refer_files/2023-09-08_16-14-05/temp_script.py", line 4, in <module>
+    data = pd.read_csv('2023_silver_data.csv')
+  File "/usr/local/lib/python3/ci/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/usr/local/lib/python3/ci/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/usr/local/lib/python3/ci/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/usr/local/lib/python3/ci/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 1661, in _make_engine
+    self.handles = get_handle(
+  File "/usr/local/lib/python3/ci/lib/python3.9/site-packages/pandas/io/common.py", line 859, in get_handle
+    handle = open(
+FileNotFoundError: [Errno 2] No such file or directory: '2023_silver_data.csv'
