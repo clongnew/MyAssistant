@@ -3,13 +3,16 @@ from io import StringIO
 import contextlib
 import sys
 from main_functions import check_name, generate_name, memory_to_list, create_main_agent
+from multiprocessing import Process, Queue
+import multiprocessing
+import traceback
 
 gr_row = lambda scale: gr.Row(scale=scale)
 main_agent = create_main_agent()
 print('main_agent has been created: ', main_agent, '\n')
 
 
-def capture_output(func):
+def capture_output_and_error(func):
     @contextlib.contextmanager
     def captured_output():
         new_out, new_err = StringIO(), StringIO()
@@ -21,9 +24,21 @@ def capture_output(func):
             sys.stdout, sys.stderr = old_out, old_err
 
     def wrapper(*args, **kwargs):
+        result = (None, )
+        stdout = ""
+        error_message = None
+
         with captured_output() as (out, err):
-            result = func(*args, **kwargs)
-        return *result, out.getvalue(), err.getvalue()
+            try:
+                result = func(*args, **kwargs)
+            except Exception as e:
+                error_message = str(e)
+                traceback_str = traceback.format_exc()
+                error_message += "\n" + traceback_str
+
+            stdout = out.getvalue()
+
+        return *result, stdout, error_message
 
     return wrapper
 
@@ -33,7 +48,7 @@ def main_interface(dialogue_dic):
         with gr.Row():
             # 1.组件函数
 
-            @capture_output
+            @capture_output_and_error
             def ai_answer(query, current_dialogue, current_name):
                 print(f'start_answer agent memory: {main_agent.memory} \n')
                 answer = main_agent.run(query)
@@ -47,7 +62,7 @@ def main_interface(dialogue_dic):
                 # 清空输出栏，聊天记录，及时更新对话名称
                 return "", current_dialogue, hd_options
 
-            @capture_output
+            @capture_output_and_error
             def history_to_current(name):
                 global main_agent
                 print(dialogue_dic, '\n\n')
