@@ -7,12 +7,17 @@ from langchain.schema import SystemMessage
 from tools import tool_list
 from langchain.tools.base import StructuredTool
 from prompts import message_funcs
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from langchain.callbacks.streaming_stdout_final_only import (
+    FinalStreamingStdOutCallbackHandler,
+)
 
 
 # 尝试以下：1。 报错内容更具体，直接捕获 2。工具里不再直接包含 run_code 3。给的 prompt 要求重新执行 4。或者将原代码直接返回
 # 这个也是工具，但由于初始化 agent 需要这些工具，因此在这里使用
 def create_agent(memory=None, sys_message='You are a helpful AI assistant.', mytools=None):
-    llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613")
+    llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613", streaming=True,
+                     callbacks=[FinalStreamingStdOutCallbackHandler()])
     system_message = SystemMessage(content=sys_message)
     agent_kwargs = {
         "extra_prompt_messages": [MessagesPlaceholder(variable_name="chat_history")],

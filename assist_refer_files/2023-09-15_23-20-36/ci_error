@@ -1,6 +1,6 @@
-CalledProcessError(1, ['/usr/local/lib/python3/ci/bin/python', '/Users/mac/workspace/gpt_work/MyAssistant/assist_refer_files/temp_script.py'])
+CalledProcessError(1, ['/usr/local/lib/python3/ci/bin/python', '/Users/mac/workspace/gpt_work/MyAssistant/assist_refer_files/2023-09-15_23-20-36/temp_script.py'])
 Traceback (most recent call last):
-  File "/Users/mac/workspace/gpt_work/MyAssistant/assist_refer_files/temp_script.py", line 4, in <module>
+  File "/Users/mac/workspace/gpt_work/MyAssistant/assist_refer_files/2023-09-15_23-20-36/temp_script.py", line 4, in <module>
     data = pd.read_csv('2023_silver_data.csv')
   File "/usr/local/lib/python3/ci/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 912, in read_csv
     return _read(filepath_or_buffer, kwds)

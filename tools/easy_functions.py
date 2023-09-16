@@ -38,7 +38,11 @@ def tool_search_online(query):
     你也可以使用它帮助你完善你的回答
     """
     search = SerpAPIWrapper()
-    return {'search_result': search.run(query=query)}
+    try:
+        r = search.run(query=query)
+    except e:
+        r = "google hasn't return any results \n " + str(e)
+    return {'search_result': r}
 
 
 def run_code(code: str, log_path=''):

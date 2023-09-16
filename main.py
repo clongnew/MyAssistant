@@ -7,7 +7,7 @@ os.environ['PYTHONIOENCODING'] = 'utf-8'
 # os.environ['https_proxy'] = 'http://127.0.0.1:7890'
 # os.environ['http_proxy'] = 'http://127.0.0.1:7890'
 # os.environ['all_proxy'] = 'socks5://127.0.0.1:7890'
-os.environ["OPENAI_API_KEY"] = 'fk200821-RPW7NmOKUwdGFU7w6aaN54hyn2OkUKYt'
+os.environ["OPENAI_API_KEY"] = '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'
 os.environ['OPENAI_API_BASE'] = 'https://oa.api2d.net/v1'
 
 from main_gradio import main_interface
