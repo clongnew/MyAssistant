@@ -26,7 +26,7 @@ def create_main_agent(**kwargs):
 
 
 # 历史记录的保存和加载
-summarize_llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613")
+summarize_llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613", streaming=True)
 name_dic_file = os.path.join(current_dir, 'history.json')
 
 
@@ -36,6 +36,7 @@ def generate_name(text):
     return summarize_llm.predict(prompt)
 
 
+# 改成 uuid
 def check_name(name, name_dic):
     i = 0
     original_name = name
@@ -71,7 +72,7 @@ def load_history_memory():
                                                     memory_key='chat_history',
                                                     return_messages=True)
         memory_dic[k] = retrieved_memory
-    print(f'load_memory_dic:: {memory_dic}, \n')
+    print(f'load_memory_dic \n')
     return memory_dic
 
 
