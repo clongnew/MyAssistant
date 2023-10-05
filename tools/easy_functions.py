@@ -1,11 +1,11 @@
 # 放置简单函数
 import os
 from langchain import SerpAPIWrapper
+from langchain import GoogleSerperAPIWrapper
 import yaml
 import functools
 import subprocess
 import time
-import sys
 
 # 设置全局变量，供需要访问外网的工具
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -32,17 +32,25 @@ def set_aboard_config(func):
 
 
 @set_aboard_config
-def tool_search_online(query):
+def tool_search_online(query, k=3):
     """当你遇到不确定的知识或者 human 希望你基于网络信息回答时，你可以使用它查询网上相关知识；
     在需要查询实时信息时，你可以优先使用这个工具；
     你也可以使用它帮助你完善你的回答
     """
-    search = SerpAPIWrapper()
-    try:
-        r = search.run(query=query)
-    except e:
-        r = "google hasn't return any results \n " + str(e)
-    return {'search_result': r}
+    search = GoogleSerperAPIWrapper()
+    search.k = k
+    return search.run(query=query)
+
+
+@set_aboard_config
+def search_userful_urls(query, k=5):
+    """
+    查询一些关键的网页 URL 以便进一步分析
+    """
+    search = GoogleSerperAPIWrapper()
+    search.k = k
+    res = search.results(query=query)['organic']
+    return [r['link'] for r in res]
 
 
 def run_code(code: str, log_path=''):
@@ -81,5 +89,5 @@ def run_code(code: str, log_path=''):
     #     subprocess.run(["rm", temp_script])
 
 
-# chrome binary 路径
-easy_funcs = [tool_search_online, run_code]
+# 所有待输出的工具函数
+easy_funcs = [tool_search_online, run_code, search_userful_urls]

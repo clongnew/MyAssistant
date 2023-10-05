@@ -12,6 +12,7 @@ def persist_embedding(documents, persist_directory):
     vectordb.persist()
     vectordb = None
 
+
 def add_embedding(documents, persist_directory):
     embedding = MyEmbeddings()
     # embedding = HuggingFaceEmbeddings()
@@ -21,10 +22,11 @@ def add_embedding(documents, persist_directory):
     vectordb.persist()
     vectordb = None
 
-def load_embedding(persist_directory):
+
+def load_embedding(persist_directory, k=6):
     embedding = MyEmbeddings()
     # embedding = HuggingFaceEmbeddings()
     # embedding = OpenAIEmbeddings()
     vectordb = Chroma(persist_directory=persist_directory, embedding_function=embedding)
-    retriever = vectordb.as_retriever(search_kwargs={"k": 5})
+    retriever = vectordb.as_retriever(search_kwargs={"k": k})
     return retriever

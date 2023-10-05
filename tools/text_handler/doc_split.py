@@ -40,3 +40,7 @@ def split_paragraph(text, file_name='file', max_length=300):
         new_doc = Document(page_content=paragraph, metadata=metadata)
         documents.append(new_doc)
     return documents
+
+
+def texts2doc(texts):
+    return [Document(page_content=text) for text in texts]
